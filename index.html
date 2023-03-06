@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tinymsg {
+            box-sizing: border-box;
+            min-width: 200px;
+            padding: 10px;
+            min-height: 39px;
+            font-size: 14px;
+            background: #ebeef5;
+            border-radius: 4px;
+            position: absolute;
+            z-index: 9999;
+            top: 100px;
+            left: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="pop()">pop</button>
+
+
+    <button onclick="close()">close</button>
+
+
+
+    <script src="./tinymsg.js"></script>
+    <script>
+
+
+        function pop() {
+            var msg1 = new MyPlugin('hello word');
+
+            // var txt="我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试，也可放心地在生产环境打包部署使用，享受整个生态圈和工具链带来的诸多好处。";
+
+            // var msg2 = new MyPlugin({
+            //     content:txt,
+            //     duration:0,
+            // });
+
+            // window.setTimeout(function(){
+            // 	msg.close();
+            // }, 2000);
+        };
+
+    </script>
+</body>
+
+</html>
