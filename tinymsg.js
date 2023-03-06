@@ -14,6 +14,27 @@
 
     };
 
+    function createMsg(options){
+        var ele = document.createElement("div");        
+        ele.id = options.id;
+        addClass(ele, 'tinymsg');
+        ele.innerHTML = '<div class="tinymsg_content">'+options.content+'<div/>';
+        if(options.bgColor){
+            ele.style.background=options.bgColor;
+        }
+
+        var last;
+        if(msgs.length){
+            last=msgs[msgs.length-1];
+        }
+        var top=last?last.style.top:20;
+        console.log(top);
+
+        //ele.style.top=top;
+        msgs.push(ele);
+        return ele;
+    };
+
     function addClass(el, cls) {
         if (el.classList) el.classList.add(cls)
         else el.className += ' ' + cls
@@ -27,6 +48,7 @@
 
     // count
     var count = 0;
+    var msgs=[];
 
     // class
     var MyPlugin = function (options) {
@@ -39,24 +61,24 @@
         count++;
         //默认参数
         var defaults = {
-            id: 'msg' + count,//id唯一
+            id: 'msg_' + count,//id唯一
             duration: 3,
         };
         this.options = Object.assign({}, defaults, options);//合并参数
         this.init(); //初始化
     };
 
+    // init
     MyPlugin.prototype.init = function () {
         var options = this.options;
         console.log('[init]：' + options.id);
-        var ele = document.createElement("div"); //创建元素          
-        ele.id = options.id;
-        addClass(ele, 'tinymsg');
-        ele.innerHTML = options.content;
+
+        var ele=createMsg(options);
+       
         document.body.appendChild(ele);//插入元素
 
 
-        // 
+        // duration
         if (options.duration) {
             var that = this;
             setTimeout(function () {
@@ -65,7 +87,7 @@
         }
     };
 
-    //初始化
+    // close
     MyPlugin.prototype.close = function () {
 
         var id = this.options.id;
