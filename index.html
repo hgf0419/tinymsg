@@ -11,16 +11,29 @@
             box-sizing: border-box;
             min-width: 200px;
             padding: 10px;
-            min-height: 39px;      
-            background: #ebeef5;
+            min-height: 39px;
             border-radius: 4px;
-            position: absolute;
-            z-index: 9999;
-            top: 100px;
+            position: fixed;
             left: 50%;
-            transition-duration: 5s;
+            top: 20px;
+            transform: translateX(-50%);
+            transition: opacity .5s, transform .5s, top .5s;
+            overflow: hidden;
         }
-        .tinymsg_content{
+
+        .tinymsg--base {
+            background: lightblue;
+        }
+
+        .tinymsg--success {
+            background: green;
+        }
+
+        .tinymsg--warning {
+            background: #f90;
+        }
+
+        .tinymsg_content {
             font-size: 14px;
         }
     </style>
@@ -28,6 +41,8 @@
 
 <body>
     <button onclick="pop()">pop</button>
+    <button onclick="pop_success()">pop_success</button>
+    <button onclick="pop_warning()">pop_warning</button>
 
 
     <button onclick="close()">close</button>
@@ -37,26 +52,42 @@
     <script src="./tinymsg.js"></script>
     <script>
 
-
+        var a = 1;
         function pop() {
-            var msg1 = new MyPlugin('hello word');
-            var msg2 = new MyPlugin({
-                content:'hello',
-                bgColor:'#f90',
-            });
+
+            var msg = new MyPlugin('hello ' + a++);
+            // var msg2 = new MyPlugin({
+            //     content:'hello 2',
+            //     bgColor:'#f90',
+            // });
+
+            // var msg3 = new MyPlugin({
+            //     content:'hello 3',
+            //     duration:0,
+            // });
 
             // var txt="我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试，也可放心地在生产环境打包部署使用，享受整个生态圈和工具链带来的诸多好处。";
 
-            // var msg2 = new MyPlugin({
-            //     content:txt,
-            //     duration:0,
-            // });
+
 
             // window.setTimeout(function(){
             // 	msg.close();
             // }, 2000);
         };
 
+        function pop_success() {
+            var msg = new MyPlugin({
+                type: 'success',
+                content: 'hello ' + a++
+            });
+        }
+
+        function pop_warning() {
+            var msg = new MyPlugin({
+                type: 'warning',
+                content: 'hello ' + a++
+            });
+        }
     </script>
 </body>
 

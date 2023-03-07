@@ -14,58 +14,36 @@
 
     };
 
-    function createMsg(options){
-        var ele = document.createElement("div");        
-        ele.id = options.id;
-        addClass(ele, 'tinymsg');
-        ele.innerHTML = '<div class="tinymsg_content">'+options.content+'<div/>';
-        if(options.bgColor){
-            ele.style.background=options.bgColor;
-        }
-
-        var last;
-        if(msgs.length){
-            last=msgs[msgs.length-1];
-        }
-        var top=last?last.style.top:20;
-        console.log(top);
-
-        //ele.style.top=top;
-        msgs.push(ele);
-        return ele;
-    };
-
     function addClass(el, cls) {
         if (el.classList) el.classList.add(cls)
         else el.className += ' ' + cls
     };
-
 
     // styles
     //var css = '.tinymsg{width:200px;height:40px;position:absolute;z-index:9999;top:100px;background:#f90;}';
 
     //addCss(css);
 
-    // count
-    var count = 0;
-    var msgs=[];
+    var increment = 1;
+    var zIndex = 1001;
+    var instances = [];
 
     // class
     var MyPlugin = function (options) {
         // 支持传入字符串
         if (typeof options === 'string') {
             options = {
-                content: options
+                content: options,
             };
         }
-        count++;
         //默认参数
         var defaults = {
-            id: 'msg_' + count,//id唯一
-            duration: 3,
+            id: 'msg_' + increment++,//id唯一
+            type:'base',
+            duration: 5,
         };
         this.options = Object.assign({}, defaults, options);//合并参数
-        this.init(); //初始化
+        this.init();
     };
 
     // init
@@ -73,10 +51,32 @@
         var options = this.options;
         console.log('[init]：' + options.id);
 
-        var ele=createMsg(options);
-       
-        document.body.appendChild(ele);//插入元素
+        var el = document.createElement("div");
+        el.id = options.id;
+        addClass(el, 'tinymsg');
+        el.innerHTML = '<div class="tinymsg_content">' + options.content + '<div/>';
+        if(options.type){
+            addClass(el,'tinymsg--'+options.type);
+        }
+        if (options.bgColor) {
+            ele.style.background = options.bgColor;
+        }
 
+        var verticalOffset = options.offset || 20;
+
+        var len = instances.length;
+
+        // 上一个
+        var last = instances[len - 1];
+        if (last) {
+            var last_dom = last.el;
+            verticalOffset = parseInt(last_dom.style.top,10) + last_dom.offsetHeight + 16;
+        }
+
+        el.style.top = verticalOffset + 'px';
+        el.style.zIndex = zIndex++;
+        instances.push({ id: options.id, el: el });
+        document.body.appendChild(el);//插入元素
 
         // duration
         if (options.duration) {
@@ -92,8 +92,31 @@
 
         var id = this.options.id;
         console.log('[close]：' + id);
-        var ele = document.getElementById(id);
-        document.body.removeChild(ele);//删除元素
+
+        var len = instances.length;
+        var index = -1;
+        var removedHeight;
+        for (var i = 0; i < len; i++) {
+            var ins = instances[i];
+            if (ins && ins.id == id) {
+                index = i;
+                removedHeight = ins.el.offsetHeight;
+                instances.splice(i, 1);
+                break;
+            }
+        }
+        var el = document.getElementById(id);
+        document.body.removeChild(el);//删除元素
+        if (len <= 1 || index === -1 || index == len - 1) return;
+
+        // 下一个自动顶上被删除的位置
+        for (var i = index; i < len - 1; i++) {
+            var dom = instances[i].el;
+            dom.style.top =
+                parseInt(dom.style.top, 10) - removedHeight - 16 + 'px';
+        }
+
+        
     }
 
     if (typeof module !== 'undefined' && module.exports) module.exports = MyPlugin;
