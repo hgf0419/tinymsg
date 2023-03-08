@@ -5,47 +5,55 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>tinymsg demo</title>
     <style>
-        .tinymsg {
-            box-sizing: border-box;
-            min-width: 200px;
-            padding: 10px;
-            min-height: 39px;
-            border-radius: 4px;
-            position: fixed;
-            left: 50%;
-            top: 20px;
-            transform: translateX(-50%);
-            transition: opacity .5s, transform .5s, top .5s;
-            overflow: hidden;
-        }
-
-        .tinymsg--base {
-            background: lightblue;
-        }
-
-        .tinymsg--success {
-            background: green;
-        }
-
-        .tinymsg--warning {
-            background: #f90;
-        }
-
-        .tinymsg_content {
-            font-size: 14px;
+        .mymsg {
+            background-color: #09f;
+            border-color: #09f;
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
+    <h1>tinymsg</h1>
+    <h2>use</h2>
     <button onclick="pop()">pop</button>
-    <button onclick="pop_success()">pop_success</button>
-    <button onclick="pop_warning()">pop_warning</button>
+    <hr>
 
+    <h2>type</h2>
+    <button onclick="pop_type('base')">pop base</button>
+    <button onclick="pop_type('success')">pop success</button>
+    <button onclick="pop_type('warning')">pop warning</button>
+    <button onclick="pop_type('danger')">pop danger</button>
+    <hr>
 
-    <button onclick="close()">close</button>
+    <h2>type Longtext</h2>
+    <button onclick="pop_type('base',true)">pop base</button>
+    <button onclick="pop_type('success',true)">pop success</button>
+    <button onclick="pop_type('warning',true)">pop warning</button>
+    <button onclick="pop_type('danger',true)">pop danger</button>
+    <hr>
+
+    <h2>offset</h2>
+    <button onclick="pop_offset(100)">pop offset 100</button>
+    <button onclick="pop_offset(200)">pop offset 200</button>
+    <hr>
+
+    <h2>duration</h2>
+    <button onclick="pop_duration(5)">pop duration 5</button>
+    <button onclick="pop_duration(10)">pop duration 10</button>
+    <button onclick="pop_duration(0)">pop duration 0</button>
+    <hr>
+
+    <h2>custClass</h2>
+    <button onclick="pop_class()">pop custClass mymsg</button>
+    <hr>
+
+    <h2>closed</h2>
+    <button onclick="pop_close()">pop closed</button>
+    <hr>
+
 
 
 
@@ -53,41 +61,48 @@
     <script>
 
         var a = 1;
+        var text = "hello";
+        var text_long = "我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试，也可放心地在生产环境打包部署使用，享受整个生态圈和工具链带来的诸多好处。";
+
         function pop() {
-
-            var msg = new MyPlugin('hello ' + a++);
-            // var msg2 = new MyPlugin({
-            //     content:'hello 2',
-            //     bgColor:'#f90',
-            // });
-
-            // var msg3 = new MyPlugin({
-            //     content:'hello 3',
-            //     duration:0,
-            // });
-
-            // var txt="我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试，也可放心地在生产环境打包部署使用，享受整个生态圈和工具链带来的诸多好处。";
-
-
-
-            // window.setTimeout(function(){
-            // 	msg.close();
-            // }, 2000);
+            var msg = new MyPlugin(text+' ' + a++);
         };
 
-        function pop_success() {
+        function pop_type(t, long) {
             var msg = new MyPlugin({
-                type: 'success',
-                content: 'hello ' + a++
+                type: t,
+                content: long ? text_long : text + ' ' + a++
             });
         }
 
-        function pop_warning() {
+        function pop_offset(o) {
             var msg = new MyPlugin({
-                type: 'warning',
-                content: 'hello ' + a++
+                content: text+' ' + a++,
+                offset: o
             });
         }
+
+        function pop_duration(d) {
+            var msg = new MyPlugin({
+                content: text+' ' + a++,
+                duration: d
+            });
+        }
+
+        function pop_class() {
+            var msg = new MyPlugin({
+                content: text+' ' + a++,
+                custClass: 'mymsg'
+            });
+        }
+
+        function pop_close() {
+            var msg = new MyPlugin({
+                content: text_long + ' ' + a++,
+                showClose: true,
+            });
+        }
+
     </script>
 </body>
 

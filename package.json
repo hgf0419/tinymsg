@@ -1,0 +1,17 @@
+{
+  "name": "tinymsg",
+  "version": "0.1.0",
+  "description": "a small message plugin",
+  "main": "tinymsg.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hgf0419/tinymsg.git"
+  },
+  "keywords": [
+    "msg",
+    "message",
+    "js"
+  ],
+  "author": "Golf",
+  "license": "MIT"
+}
