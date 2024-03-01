@@ -8,10 +8,9 @@
             o[key] = n[key];
         }
         return o;
-    }
+    };
 
-    function addCss(css) {
-        console.log(css);
+    function importCss(css) {
         var s = document.createElement('style');
         document.head.insertBefore(s, document.head.firstChild)
         // the world
@@ -26,7 +25,7 @@
     };
 
     // insert styles
-    var styles=[
+    var styles = [
         '.tinymsg {box-sizing: border-box;padding: 10px;min-height: 41px;min-width: 300px;border-radius: 4px;border: 1px solid transparent;position: fixed;left: 50%;top: 20px;transform: translateX(-50%);transition: top .5s;overflow: hidden;}',
         '.tinymsg--base {color: #31708f;background-color: #d9edf7;border-color: #bce8f1;}',
         '.tinymsg--success {color: #3c763d;background-color: #dff0d8;border-color: #d6e9c6;}',
@@ -36,13 +35,14 @@
         '.tinymsg_content {font-size: 14px;}',
         '.tinymsg_close {font-size: 20px;font-weight: 600;cursor: pointer;position: absolute;right: 10px;top: 5px;}',
     ];
-    addCss(styles.join(''));
+    importCss(styles.join(''));
 
     var increment = 1;
     var zIndex = 1001;
     var instances = [];
-    var MyPlugin = function (options) {
-        // 支持传入字符串
+    
+    var Tinymsg = function (options = '') {
+        // support string
         if (typeof options === 'string') {
             options = {
                 content: options,
@@ -50,19 +50,19 @@
         }
         // default
         var defaults = {
+            id: 'msg_' + increment++,// element id
             type: 'base',
             offset: 20,
             duration: 3,
-            id: 'msg_' + increment++,// id
+            showClose:false,
         };
         this.options = extend(defaults, options);
         this.init();
     };
 
     // init
-    MyPlugin.prototype.init = function () {
+    Tinymsg.prototype.init = function () {
         var options = this.options;
-        // console.log('[init]：' + options.id);
 
         var el = document.createElement("div");
         el.id = options.id;
@@ -72,7 +72,12 @@
         if (options.type) {
             addClass(el, 'tinymsg--' + options.type);
         }
-        if (options.showClose) {
+
+        // duration
+        var _duration=options.duration>0?options.duration:0;
+
+        var _showClose=options.showClose||_duration==0;
+        if (_showClose) {
             addClass(el, 'tinymsg--close');
             el.innerHTML += '<span class="tinymsg_close">×</span>';
         }
@@ -96,25 +101,25 @@
         document.body.appendChild(el);// insert
 
         var that = this;
-        if (options.showClose) {
-            // event   
+
+        // autoClose
+        if (_duration>0) {
+            setTimeout(function () {
+                that.close();
+            }, _duration * 1000)
+        }
+
+        // showClose
+        if (_showClose) {
             document.getElementById(options.id).lastElementChild.onclick = function () {
                 that.close();
             };
         }
-
-        // duration
-        if (options.duration) {
-            setTimeout(function () {
-                that.close();
-            }, options.duration * 1000)
-        }
     };
 
     // close
-    MyPlugin.prototype.close = function () {
+    Tinymsg.prototype.close = function () {
         var id = this.options.id;
-        // console.log('[close]：' + id);
 
         var len = instances.length;
         var index = -1;
@@ -144,8 +149,8 @@
 
     }
 
-    if (typeof module !== 'undefined' && module.exports) module.exports = MyPlugin;
-    if (typeof define === 'function') define(function () { return MyPlugin; });
-    global.MyPlugin = MyPlugin;
+    if (typeof module !== 'undefined' && module.exports) module.exports = Tinymsg;
+    if (typeof define === 'function') define(function () { return Tinymsg; });
+    global.Tinymsg = Tinymsg;
 
 })(this);

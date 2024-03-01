@@ -44,6 +44,7 @@
     <button onclick="pop_duration(5)">pop duration 5</button>
     <button onclick="pop_duration(10)">pop duration 10</button>
     <button onclick="pop_duration(0)">pop duration 0</button>
+    <button onclick="pop_duration(-1)">pop duration -1</button>
     <hr>
 
     <h2>custClass</h2>
@@ -54,9 +55,6 @@
     <button onclick="pop_close()">pop closed</button>
     <hr>
 
-
-
-
     <script src="./tinymsg.js"></script>
     <script>
 
@@ -65,39 +63,39 @@
         var text_long = "我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试，也可放心地在生产环境打包部署使用，享受整个生态圈和工具链带来的诸多好处。";
 
         function pop() {
-            var msg = new MyPlugin(text+' ' + a++);
+            var msg = new Tinymsg(text+' ' + a++);
         };
 
         function pop_type(t, long) {
-            var msg = new MyPlugin({
+            var msg = new Tinymsg({
                 type: t,
                 content: long ? text_long : text + ' ' + a++
             });
         }
 
         function pop_offset(o) {
-            var msg = new MyPlugin({
+            var msg = new Tinymsg({
                 content: text+' ' + a++,
                 offset: o
             });
         }
 
         function pop_duration(d) {
-            var msg = new MyPlugin({
+            var msg = new Tinymsg({
                 content: text+' ' + a++,
                 duration: d
             });
         }
 
         function pop_class() {
-            var msg = new MyPlugin({
+            var msg = new Tinymsg({
                 content: text+' ' + a++,
                 custClass: 'mymsg'
             });
         }
 
         function pop_close() {
-            var msg = new MyPlugin({
+            var msg = new Tinymsg({
                 content: text_long + ' ' + a++,
                 showClose: true,
             });

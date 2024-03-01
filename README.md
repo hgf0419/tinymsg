@@ -6,3 +6,12 @@ a small message plugin
 npm install tinymsg
 ```
 
+## Use
+```
+import Tinymsg from 'tinymsg'
+var msg = new Tinymsg('message');
+```
+
+## Next
+- support template
+
