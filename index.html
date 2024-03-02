@@ -7,7 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tinymsg demo</title>
     <style>
-        .mymsg {
+        button {
+            font-size: 14px;
+            padding: 6px 12px;
+            color: #333;
+            background-color: #fff;
+            border:1px solid transparent;
+            border-color: #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            -webkit-appearance: button;
+        }
+        button:hover{
+            background-color: #eee;
+        }
+
+        .cust-msg {
             background-color: #09f;
             border-color: #09f;
             color: #fff;
@@ -63,7 +78,7 @@
         var text_long = "我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试，也可放心地在生产环境打包部署使用，享受整个生态圈和工具链带来的诸多好处。";
 
         function pop() {
-            var msg = new Tinymsg(text+' ' + a++);
+            var msg = new Tinymsg(text + ' ' + a++);
         };
 
         function pop_type(t, long) {
@@ -75,22 +90,22 @@
 
         function pop_offset(o) {
             var msg = new Tinymsg({
-                content: text+' ' + a++,
+                content: text + ' ' + a++,
                 offset: o
             });
         }
 
         function pop_duration(d) {
             var msg = new Tinymsg({
-                content: text+' ' + a++,
+                content: text + ' ' + a++,
                 duration: d
             });
         }
 
         function pop_class() {
             var msg = new Tinymsg({
-                content: text+' ' + a++,
-                custClass: 'mymsg'
+                content: text + ' ' + a++,
+                custClass: 'cust-msg'
             });
         }
 
