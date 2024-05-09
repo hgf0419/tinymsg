@@ -7,6 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tinymsg demo</title>
     <style>
+        button{
+            padding: 6px 8px;
+            background-color: #09f;
+            color: #fff;
+            outline: 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
         .mymsg {
             background-color: #09f;
             border-color: #09f;
@@ -55,6 +64,11 @@
     <button onclick="pop_close()">pop closed</button>
     <hr>
 
+    <h2>html</h2>
+    <button onclick="pop_html()">pop html string</button>
+    <button onclick="pop_html2(true)">pop html render</button>
+    <hr>
+
     <script src="./tinymsg.js"></script>
     <script>
 
@@ -63,7 +77,7 @@
         var text_long = "我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试，也可放心地在生产环境打包部署使用，享受整个生态圈和工具链带来的诸多好处。";
 
         function pop() {
-            var msg = new Tinymsg(text+' ' + a++);
+            var msg = new Tinymsg(text + ' ' + a++);
         };
 
         function pop_type(t, long) {
@@ -75,21 +89,21 @@
 
         function pop_offset(o) {
             var msg = new Tinymsg({
-                content: text+' ' + a++,
+                content: text + ' ' + a++,
                 offset: o
             });
         }
 
         function pop_duration(d) {
             var msg = new Tinymsg({
-                content: text+' ' + a++,
+                content: text + ' ' + a++,
                 duration: d
             });
         }
 
         function pop_class() {
             var msg = new Tinymsg({
-                content: text+' ' + a++,
+                content: text + ' ' + a++,
                 custClass: 'mymsg'
             });
         }
@@ -99,6 +113,50 @@
                 content: text_long + ' ' + a++,
                 showClose: true,
             });
+        }
+
+
+
+        function pop_html() {
+            var text_html = "<div><div>test</div><h1>test</h1></div>"
+            var msg = new Tinymsg({
+                content: text_html,
+            });
+        }
+
+        window._viewErrorStack = function (currentElement) {
+            var nextElement = currentElement.nextElementSibling;
+            
+            if (nextElement) {
+                // 执行一些操作
+                if(nextElement.style.display=='none'){
+                    nextElement.style.display='block';
+                }else{
+                    nextElement.style.display='none';
+                }
+            }
+        }
+
+        function pop_html2() {
+            let url = '/api/test';
+            let error = '内部错误，请联系系统管理员';
+            let stack = '我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试\nbbbbbbb\ncccccc'
+
+            let pre_html = stack ? `<pre style="white-space: pre-wrap;padding:10px;margin:10px 0 0 0;font-size: 12px;color:#fff;background:#1b265a;">${stack}</pre>` : '';
+
+            let arr_html = [
+                error,
+                " <span style='cursor:pointer;color:#3f51b5;text-decoration:underline;' onclick='_viewErrorStack(this)'>查看详情</span>",
+                `<div style="display: none;"><p style="color:#000;margin-top:10px;">URL：${url}</p>${pre_html}</div>`,
+            ];
+
+            var msg = new Tinymsg({
+                type: 'danger',
+                content: arr_html.join(''),
+                duration: 0,
+                useHtml: true,
+            });
+
         }
 
     </script>

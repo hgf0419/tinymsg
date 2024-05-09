@@ -24,6 +24,17 @@
         else el.className += ' ' + cls
     };
 
+    function htmlReplace(html) {
+        return html.replace(/[<>&\n]/g, function (x) {
+            return {
+                '<': '&lt;',
+                '>': '&gt;',
+                '&': '&amp;',
+                '\n': '<br />',
+            }[x];
+        });
+    };
+
     // insert styles
     var styles = [
         '.tinymsg {box-sizing: border-box;padding: 10px;min-height: 41px;min-width: 300px;border-radius: 4px;border: 1px solid transparent;position: fixed;left: 50%;top: 20px;transform: translateX(-50%);transition: top .5s;overflow: hidden;}',
@@ -40,7 +51,7 @@
     var increment = 1;
     var zIndex = 1001;
     var instances = [];
-    
+
     var Tinymsg = function (options = '') {
         // support string
         if (typeof options === 'string') {
@@ -54,7 +65,8 @@
             type: 'base',
             offset: 20,
             duration: 3,
-            showClose:false,
+            showClose: false,
+            useHtml:false,
         };
         this.options = extend(defaults, options);
         this.init();
@@ -67,16 +79,19 @@
         var el = document.createElement("div");
         el.id = options.id;
         addClass(el, 'tinymsg');
-        el.innerHTML = '<div class="tinymsg_content">' + options.content + '<div/>';
+
+        var content=options.useHtml?options.content:htmlReplace(options.content);
+
+        el.innerHTML = '<div class="tinymsg_content">' + content + '<div/>';
 
         if (options.type) {
             addClass(el, 'tinymsg--' + options.type);
         }
 
         // duration
-        var _duration=options.duration>0?options.duration:0;
+        var _duration = options.duration > 0 ? options.duration : 0;
 
-        var _showClose=options.showClose||_duration==0;
+        var _showClose = options.showClose || _duration == 0;
         if (_showClose) {
             addClass(el, 'tinymsg--close');
             el.innerHTML += '<span class="tinymsg_close">×</span>';
@@ -103,7 +118,7 @@
         var that = this;
 
         // autoClose
-        if (_duration>0) {
+        if (_duration > 0) {
             setTimeout(function () {
                 that.close();
             }, _duration * 1000)
