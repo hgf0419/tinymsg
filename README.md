@@ -1,5 +1,7 @@
 # tinymsg
 a small message plugin
+## demo
+[preview](https://hgf0419.github.io/tinymsg/)
 
 ## Install
 ```

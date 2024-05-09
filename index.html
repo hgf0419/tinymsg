@@ -7,16 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tinymsg demo</title>
     <style>
-        button{
-            padding: 6px 8px;
-            background-color: #09f;
-            color: #fff;
-            outline: 0;
-            border: none;
+        button {
+            font-size: 14px;
+            padding: 6px 12px;
+            color: #333;
+            background-color: #fff;
+            border:1px solid transparent;
+            border-color: #ccc;
             border-radius: 4px;
             cursor: pointer;
+            -webkit-appearance: button;
         }
-        .mymsg {
+        button:hover{
+            background-color: #eee;
+        }
+
+        .cust-msg {
             background-color: #09f;
             border-color: #09f;
             color: #fff;
@@ -104,7 +110,7 @@
         function pop_class() {
             var msg = new Tinymsg({
                 content: text + ' ' + a++,
-                custClass: 'mymsg'
+                custClass: 'cust-msg'
             });
         }
 
