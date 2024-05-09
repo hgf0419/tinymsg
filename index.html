@@ -144,7 +144,6 @@
         }
 
         function pop_html2() {
-            let url = '/api/test';
             let error = '内部错误，请联系系统管理员';
             let stack = '我们推荐使用 npm 或 yarn 的方式进行开发，不仅可在开发环境轻松调试\nbbbbbbb\ncccccc'
 
@@ -153,7 +152,7 @@
             let arr_html = [
                 error,
                 " <span style='cursor:pointer;color:#3f51b5;text-decoration:underline;' onclick='_viewErrorStack(this)'>查看详情</span>",
-                `<div style="display: none;"><p style="color:#000;margin-top:10px;">URL：${url}</p>${pre_html}</div>`,
+                `<div style="display: none;">${pre_html}</div>`,
             ];
 
             var msg = new Tinymsg({
