@@ -19,7 +19,7 @@ var msg = new Tinymsg({
 ## Options
 | 参数      |     说明                 |  可选值                      | 默认值 |
 | -         | -                        | -                           | -      |
-| type      | 类型                     | base/success/warning/danger | base   |
+| type      | 类型                     | info/success/warning/danger | info   |
 | content   | 消息内容                 | -                           | -      |
 | offset    | 距离窗口顶部的偏移量      | -                           | 20     |
 | duration  | 显示时间, 秒。0表示不关闭 | -                           | 3      |

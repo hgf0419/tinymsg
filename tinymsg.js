@@ -37,11 +37,11 @@
 
     // insert styles
     var styles = [
-        '.tinymsg {box-sizing: border-box;padding: 10px;min-height: 41px;min-width: 300px;border-radius: 4px;border: 1px solid transparent;position: fixed;left: 50%;top: 20px;transform: translateX(-50%);transition: top .5s;overflow: hidden;}',
-        '.tinymsg--base {color: #31708f;background-color: #d9edf7;border-color: #bce8f1;}',
-        '.tinymsg--success {color: #3c763d;background-color: #dff0d8;border-color: #d6e9c6;}',
-        '.tinymsg--warning {color: #8a6d3b;background-color: #fcf8e3;border-color: #faebcc;}',
-        '.tinymsg--danger {color: #a94442;background-color: #f2dede;border-color: #ebccd1;}',
+        '.tinymsg {color: #333;box-sizing: border-box;padding: 10px;min-height: 41px;min-width: 300px;border-radius: 4px;border: 1px solid transparent;position: fixed;left: 50%;top: 20px;transform: translateX(-50%);transition: top .5s;overflow: hidden;}',
+        '.tinymsg--info {background-color: #edf5fe;border-color: #c7dffb;}',
+        '.tinymsg--success {background-color: #edf7f2;border-color: #c5e7d5;}',
+        '.tinymsg--warning {background-color: #fef7ed;border-color: #fae0b5;}',
+        '.tinymsg--danger {background-color: #fbeef1;border-color: #f3cbd3;}',
         '.tinymsg--close{padding-right: 28px;}',
         '.tinymsg_content {font-size: 14px;}',
         '.tinymsg_close {font-size: 20px;font-weight: 600;cursor: pointer;position: absolute;right: 10px;top: 5px;}',
@@ -62,7 +62,7 @@
         // default
         var defaults = {
             id: 'msg_' + increment++,// element id
-            type: 'base',
+            type: 'info',
             offset: 20,
             duration: 3,
             showClose: false,
