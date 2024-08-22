@@ -49,7 +49,7 @@
     importCss(styles.join(''));
 
     var increment = 1;
-    var zIndex = 1001;
+    var zIndex = 10001;
     var instances = [];
 
     var Tinymsg = function (options = '') {
@@ -66,7 +66,7 @@
             offset: 20,
             duration: 3,
             showClose: false,
-            useHtml:false,
+            useHtml: false,
         };
         this.options = extend(defaults, options);
         this.init();
@@ -80,7 +80,7 @@
         el.id = options.id;
         addClass(el, 'tinymsg');
 
-        var content=options.useHtml?options.content:htmlReplace(options.content);
+        var content = options.useHtml ? options.content : htmlReplace(options.content);
 
         el.innerHTML = '<div class="tinymsg_content">' + content + '<div/>';
 
